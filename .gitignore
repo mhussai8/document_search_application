@@ -1,0 +1,80 @@
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Ignore logs
+logs/
+*.log
+
+# Ignore temporary files
+temp/
+tmp/
+.tmp/
+
+# Ignore environment files
+.env
+.env.local
+.env.*.local
+
+# Ignore configuration files with secrets
+config/config.yml
+!config/config.example.yml
+
+# Ignore Google Cloud credentials
+*.json
+!requirements.txt
+credentials/
+
+# Ignore test coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Ignore build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Ignore Docker volumes
+elasticsearch_data/
+
+# Ignore OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Ignore data directories
+documents/
+uploads/
+
+# Ignore test coverage reports
+htmlcov/
+.coverage
+coverage.xml
+
+# Ignore conda environments
+.conda/

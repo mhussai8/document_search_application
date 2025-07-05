@@ -1,0 +1,67 @@
+# Docker Compose configuration
+# Use this configuration when running with docker-compose
+
+# Application Configuration
+app:
+  name: "Document Search Application"
+  version: "1.0.0"
+  debug: false
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4  # Increase for production
+
+# Google Cloud Storage Configuration
+gcs:
+  bucket_name: "document-search-app-huss"
+  project_id: "document-search-464611"
+  credentials_path: "${GOOGLE_APPLICATION_CREDENTIALS}"
+  
+# Elasticsearch Configuration - IMPORTANT: Use service name for Docker Compose
+elasticsearch:
+  host: "elasticsearch"  # Use service name, not localhost
+  port: 9200
+  username: ""  # Optional: Add if using authentication
+  password: ""  # Optional: Add if using authentication
+  index_name: "documents"
+  max_retries: 3
+  timeout: 30
+
+# Document Processing Configuration
+document_processing:
+  max_file_size_mb: 2
+  supported_formats:
+    - "txt"
+    - "csv"
+    - "pdf"
+    - "png"
+  ocr:
+    language: "eng"
+    dpi: 300
+  pdf:
+    max_pages: 100
+  csv:
+    max_rows: 10000
+
+# Search Configuration
+search:
+  default_limit: 10
+  max_limit: 100
+  min_score: 0.1
+  highlight_fragments: 3
+  highlight_fragment_size: 150
+  max_analyzed_offset: 1000000
+
+# Performance Configuration
+performance:
+  max_concurrent_downloads: 10
+  batch_size: 50
+  index_refresh_interval: "5s"
+  request_timeout: 30
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "/app/logs/app.log"
+  max_size_mb: 10
+  backup_count: 5

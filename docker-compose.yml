@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # Elasticsearch service
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: document-search-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - document-search
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Document search application
+  document-search-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: document-search-app
+    environment:
+      - CONFIG_PATH=/app/config/config.docker.yml
+      - INITIAL_INDEX=false
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./config:/app/config
+      - ./logs:/app/logs
+      - ${GOOGLE_APPLICATION_CREDENTIALS}:/app/credentials.json
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    networks:
+      - document-search
+    restart: unless-stopped
+
+volumes:
+  elasticsearch_data:
+    driver: local
+
+networks:
+  document-search:
+    driver: bridge

@@ -1,0 +1,75 @@
+# Copy this file to config.yml and update with your settings
+
+# Application Configuration
+app:
+  name: "Document Search Application"
+  version: "1.0.0"
+  debug: true  # Set to false in production
+  host: "0.0.0.0"
+  port: 8000
+  workers: 1  # Increase for production
+
+# Google Cloud Storage Configuration
+gcs:
+  bucket_name: "your-document-bucket"  # REQUIRED: Update with your GCS bucket name
+  project_id: "your-project-id"        # REQUIRED: Update with your GCP project ID
+  credentials_path: "${GOOGLE_APPLICATION_CREDENTIALS}"  # Path to service account JSON
+  
+# Elasticsearch Configuration
+elasticsearch:
+  host: "localhost"
+  port: 9200
+  username: ""  # Optional: Add if using authentication
+  password: ""  # Optional: Add if using authentication
+  index_name: "documents"
+  max_retries: 3
+  timeout: 30
+
+# Document Processing Configuration
+document_processing:
+  max_file_size_mb: 8
+  supported_formats:
+    - "txt"
+    - "csv"
+    - "pdf"
+    - "png"
+  ocr:
+    language: "eng"  # Tesseract language code
+    dpi: 300
+  pdf:
+    max_pages: 100
+  csv:
+    max_rows: 10000
+
+# Search Configuration
+search:
+  default_limit: 10
+  max_limit: 100
+  min_score: 0.1
+  highlight_fragments: 3
+  highlight_fragment_size: 150
+
+# Performance and Scaling
+performance:
+  max_concurrent_downloads: 10
+  batch_size: 50
+  index_refresh_interval: "5s"
+  request_timeout: 30
+
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "json"
+  file: "logs/app.log"
+  max_size_mb: 100
+  backup_count: 5
+
+# Security
+security:
+  enable_cors: true
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8080"
+  rate_limit:
+    requests_per_minute: 60
+    burst: 10

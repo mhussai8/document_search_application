@@ -72,7 +72,7 @@ async def main():
         
         # Wait a moment for potential indexing
         print("4. Waiting for indexing to potentially complete...")
-        await asyncio.sleep(5)
+        await asyncio.sleep(15)
         
         # 5. Perform various searches
         search_queries = [
@@ -88,8 +88,9 @@ async def main():
         for query in search_queries:
             print(f"\n   Searching for: '{query}'")
             try:
+                # Use the detailed search endpoint for structured results
                 response = await client.get(
-                    f"{BASE_URL}/api/v1/search",
+                    f"{BASE_URL}/api/v1/search_detailed",
                     params={"q": query, "limit": 5}
                 )
                 
@@ -109,6 +110,27 @@ async def main():
         
         print()
         
+        # 5b. Also demonstrate simple search endpoint
+        print("5b. Testing simple search endpoint (returns file paths only)...")
+        try:
+            response = await client.get(
+                f"{BASE_URL}/api/v1/search",
+                params={"q": "test", "limit": 3}
+            )
+            
+            if response.status_code == 200:
+                file_paths = response.json()  # This is a simple list of strings
+                print(f"   Simple search found {len(file_paths)} files:")
+                for i, path in enumerate(file_paths[:3], 1):
+                    print(f"     {i}. {path}")
+            else:
+                print(f"   Simple search failed: {response.status_code}")
+                
+        except Exception as e:
+            print(f"   Simple search error: {e}")
+        
+        print()
+        
         # 6. Search with filters
         print("6. Searching with file type filters...")
         file_types = ["pdf", "txt", "csv", "png"]
@@ -116,7 +138,7 @@ async def main():
         for file_type in file_types:
             try:
                 response = await client.get(
-                    f"{BASE_URL}/api/v1/search",
+                    f"{BASE_URL}/api/v1/search_detailed",
                     params={"q": "test", "file_type": file_type, "limit": 3}
                 )
                 
@@ -142,7 +164,7 @@ async def main():
         
         for query_params in advanced_queries:
             try:
-                response = await client.get(f"{BASE_URL}/api/v1/search", params=query_params)
+                response = await client.get(f"{BASE_URL}/api/v1/search_detailed", params=query_params)
                 
                 if response.status_code == 200:
                     results = response.json()

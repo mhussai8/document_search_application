@@ -30,7 +30,7 @@ services:
     container_name: document-search-app
     environment:
       - CONFIG_PATH=/app/config/config.docker.yml
-      - INITIAL_INDEX=false
+      - INITIAL_INDEX=true
       - GOOGLE_APPLICATION_CREDENTIALS=/app/credentials.json
     ports:
       - "8000:8000"

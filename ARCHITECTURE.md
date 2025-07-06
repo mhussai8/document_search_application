@@ -37,7 +37,7 @@ This document describes the **as-implemented** architecture of the Document Sear
 │  │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────────────────┐ │ │
 │  │  │  Indexing       │  │   Document      │  │   Elasticsearch Service    │ │ │
 │  │  │  Service        │  │   Processor     │  │                             │ │ │
-│  │  │                 │  │   (LangChain)   │  │ • Query Processing          │ │ │
+│  │  │                 │  │                 │  │ • Query Processing          │ │ │
 │  │  │ • GCS Discovery │  │                 │  │ • Result Ranking           │ │ │
 │  │  │ • Batch Proc.   │  │ • Text Extract. │  │ • Filtering                │ │ │
 │  │  │ • Index Clear   │  │ • OCR(Tesseract)│  │ • Highlighting             │ │ │
@@ -102,7 +102,6 @@ Admin Request → Service Call → Database Operation → Status Response
 - **Python 3.9+**: Main programming language
 - **FastAPI**: High-performance web framework for APIs
 - **Elasticsearch 8.11.0**: Search engine and document store
-- **LangChain**: Document processing and text splitting
 - **Google Cloud Storage**: Document storage and management
 
 ### Document Processing

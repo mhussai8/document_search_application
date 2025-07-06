@@ -127,7 +127,7 @@ def create_app() -> FastAPI:
         version=getattr(config.app, 'version', '1.0.0'),
         description="""
         A high-performance document search application that indexes and searches 
-        documents from Google Cloud Storage using Elasticsearch, LangChain, and FastAPI.
+        documents from Google Cloud Storage using Elasticsearch and FastAPI.
         
         ## Features
         

@@ -1,5 +1,5 @@
 """
-Document processing services using LangChain framework.
+Document processing services for extracting text from various file formats.
 """
 
 import asyncio
@@ -16,9 +16,6 @@ from PIL import Image
 from pypdf import PdfReader
 import pdfplumber
 
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.schema import Document as LangChainDocument
-
 from ..models import Document, DocumentMetadata, FileType
 from ..config import get_config
 
@@ -27,16 +24,11 @@ logger = logging.getLogger(__name__)
 
 class DocumentProcessor:
     """
-    Document processing service using LangChain for intelligent text processing.
+    Document processing service for extracting text from various file formats.
     """
     
     def __init__(self):
         self.config = get_config()
-        self.text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=1000,
-            chunk_overlap=200,
-            length_function=len,
-        )
         
     async def process_document(self, file_content: bytes, file_name: str, gcs_path: str) -> Optional[Document]:
         """
@@ -270,29 +262,6 @@ class DocumentProcessor:
         except Exception as e:
             logger.error(f"Error extracting image content: {str(e)}")
             return "", {}
-    
-    def process_with_langchain(self, content: str) -> List[LangChainDocument]:
-        """
-        Process content using LangChain for intelligent text splitting.
-        
-        Args:
-            content: Raw text content
-            
-        Returns:
-            List of LangChain Document chunks
-        """
-        try:
-            # Create LangChain document
-            langchain_doc = LangChainDocument(page_content=content)
-            
-            # Split into chunks
-            chunks = self.text_splitter.split_documents([langchain_doc])
-            
-            return chunks
-            
-        except Exception as e:
-            logger.error(f"Error processing with LangChain: {str(e)}")
-            return []
     
     def _calculate_hash(self, content: bytes) -> str:
         """Calculate SHA-256 hash of content."""

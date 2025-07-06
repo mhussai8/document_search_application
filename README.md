@@ -1,6 +1,6 @@
 # Document Search Application
 
-A high-performance document search application that indexes and searches documents from Google Cloud Storage using Elasticsearch, LangChain, and FastAPI.
+A high-performance document search application that indexes and searches documents from Google Cloud Storage using Elasticsearch and FastAPI.
 
 ## Features
 
@@ -9,7 +9,7 @@ A high-performance document search application that indexes and searches documen
 - **Fast Search**: Elasticsearch-powered full-text search
 - **Scalable**: Handles 2000+ documents with <1s response time
 - **RESTful API**: FastAPI-based REST endpoints
-- **Intelligent Processing**: LangChain framework for document processing
+- **Advanced Processing**: Intelligent text extraction and metadata analysis
 - **OCR Support**: Text extraction from images using OCR
 
 ## Requirements
